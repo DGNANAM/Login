@@ -34,6 +34,6 @@ router.post(
 );
 
 router.get("/me", auth, userController.userlogin);
-
+router.put("/forgetpassword", userController.fotgetpassword);
 router.put("/updatepassword", auth, userController.updatePassword);
 module.exports = router;

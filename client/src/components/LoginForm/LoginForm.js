@@ -3,7 +3,6 @@ import axios from "axios";
 import "./LoginForm.css";
 import { API_BASE_URL, ACCESS_TOKEN_NAME } from "../../constants/apiConstants";
 import { withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 function LoginForm(props) {
   const [state, setState] = useState({
@@ -56,6 +55,11 @@ function LoginForm(props) {
     props.history.push("/register");
     props.updateTitle("Register");
   };
+
+  const redirectToForget = () => {
+    props.updateTitle("ForgetPassword");
+    props.history.push("/forgetpassword");
+  };
   return (
     <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
       <form>
@@ -70,9 +74,6 @@ function LoginForm(props) {
             value={state.email}
             onChange={handleChange}
           />
-          <small id="emailHelp" className="form-text text-muted">
-            We'll never share your email with anyone else.
-          </small>
         </div>
         <div className="form-group text-left">
           <label htmlFor="exampleInputPassword1">Password</label>
@@ -85,9 +86,11 @@ function LoginForm(props) {
             onChange={handleChange}
           />
         </div>
-        <Link to="./ForgetPassword/ForgetPassword" className="text-left">
-          Forgot password?
-        </Link>
+        <div className="registerMessage">
+          <span className="loginText" onClick={() => redirectToForget()}>
+            Forgot password?
+          </span>
+        </div>
         <div className="form-check"></div>
         <button
           type="submit"

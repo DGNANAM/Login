@@ -39,8 +39,10 @@ function RegistrationForm(props) {
             localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
             redirectToHome();
             props.showError(null);
+          } else if (response.status === 400) {
+            props.showError("Üser already exits");
           } else {
-            props.showError("Some error ocurred");
+            props.showError("Registration failed");
           }
         })
         .catch(function (error) {

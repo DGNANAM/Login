@@ -120,6 +120,35 @@ exports.userlogin = async (req, res) => {
   }
 };
 
+exports.userforgetpassword = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return response.status(400).json({
+      errors: errors.array(),
+    });
+  }
+
+  const { email, password } = req.body;
+  try {
+    let user = await User.findOne({
+      email,
+    });
+
+    if (!user) {
+      return response.status(400).json({
+        msg: "User Not Found",
+      });
+    }
+
+    const salt = await bcrypt.genSalt(10),
+      hashpassword = await bcrypt.hash(password, salt),
+      updateduser = await user.updateOne({ password: hashpassword });
+    res.json(updateduser);
+  } catch (err) {
+    response.status(500).send("Error in Saving");
+  }
+};
+
 exports.updatePassword = async (req, res) => {
   try {
     const user = await User.findById(req.user.id),

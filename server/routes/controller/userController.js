@@ -24,6 +24,14 @@ exports.userlogin = async (req, res) => {
   }
 };
 
+exports.fotgetpassword = async (req, res) => {
+  try {
+    await dbcontroller.userforgetpassword(req, res);
+  } catch (error) {
+    res.send({ error: "Error in calling dbcontroller." });
+  }
+};
+
 exports.updatePassword = async (req, res) => {
   try {
     await dbcontroller.updatePassword(req, res);
